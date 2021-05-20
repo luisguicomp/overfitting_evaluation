@@ -1,7 +1,8 @@
+# evaluate knn performance on train and test sets with different numbers of neighbors
 from sklearn.datasets import make_classification
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
-from sklearn.tree import DecisionTreeClassifier
+from sklearn.neighbors import KNeighborsClassifier
 from matplotlib import pyplot
 # Base de dados sintética
 X, y = make_classification(n_samples=1000, n_features=20, n_informative=5, n_redundant=15, random_state=1)
@@ -9,12 +10,13 @@ X, y = make_classification(n_samples=1000, n_features=20, n_informative=5, n_red
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3)
 # listas das avaliações
 train_scores, test_scores, overfitting_score = list(), list(), list()
-# Profundidade das árvores
-values = [i for i in range(1, 21)]
+
+values = [i for i in range(1, 31)]
 
 for i in values:
-	# Árvore de decisão
-	model = DecisionTreeClassifier(max_depth=i)
+	# Algoritmo KNN
+	model = KNeighborsClassifier(n_neighbors=i)
+
 	model.fit(X_train, y_train)
 
 	train_yhat = model.predict(X_train)
